@@ -24,7 +24,7 @@ except ImportError:
 
 setup(
     name='richxerox',
-    version="1.0.0",
+    version="1.0.1",
     author='Jonathan Eunice',
     author_email='jonathan.eunice@gmail.com',
     description='copy/paste for Mac OS X for rich text (HTML/RTF) rather than plain text',

@@ -1,9 +1,19 @@
-Rich text cut/copy/paste for Mac OS X.
+|  |version| |versions|
+
+.. |version| image:: http://img.shields.io/pypi/v/richxerox.svg?style=flat
+    :alt: PyPI Package latest release
+    :target: https://pypi.python.org/pypi/richxerox
+
+.. |versions| image:: https://img.shields.io/pypi/pyversions/richxerox.svg
+    :alt: Supported versions
+    :target: https://pypi.python.org/pypi/richxerox
+
+Rich text cut/copy/paste for macOS (née Mac OS X).
 
 Usage
 =====
 
-::
+.. code-block:: python
 
     from richxerox import *
 
@@ -41,7 +51,9 @@ This is done through keyword-style arguments.
 Alternative API
 ===============
 
-If you prefer an object-oriented API::
+If you prefer an object-oriented API:
+
+.. code-block:: python
 
     from richxerox import *
 
@@ -56,7 +68,7 @@ Background
 ==========
 
 I searched long and hard but couldn't find a simple Python module that made
-``copy`` and ``paste`` operations on Mac OS X easy and straightforward. `xerox
+``copy`` and ``paste`` operations on macOS easy and straightforward. `xerox
 <http://pypi.python.org/pypi/xerox>`_ works well, but it only supports plain
 text. What about browsers and word processors that export rich text with
 hyperlinks, styles, and so on? How can you access *that* data?
@@ -68,27 +80,26 @@ I could adapt and make work without understanding the entirety of Apple's
 Descent Into RTF
 ================
 
-Even in this HTML-everywhere age, Apple and Mac OS X apps are unfortunately `RTF
-<http://en.wikipedia.org/wiki/Rich_Text_Format>`_-centric. I say unfortunately
-because:
+Even in this HTML-everywhere age, Apple and macOS apps are unfortunately `RTF
+<http://en.wikipedia.org/wiki/Rich_Text_Format>`_-centric.
 
-  * In my experience, RTF is often not robustly passed between applications.
-    Different apps interpret or render the same RTF differently, so font
-    sizes and other characteristics change.
+* In my experience, RTF is often not robustly passed between applications.
+  Different apps interpret or render the same RTF differently, so font
+  sizes and other characteristics change.
 
-  * RTF is *extremely* verbose. Microsoft Word, for instance, emits 29,807
-    characters as the copy/cut representation of "This is **good**!"
-    Microsoft is known for verbose exports, and RTF itself attempts to
-    represent whole documents rather than individual snippets. Still, that's
-    roughly 1,000x (a.k.a. three decimal orders of magnitude) as verbose as HTML.
-    Try copying existing text in some
-    application, then running ``pasteall()`` to get your own taste of this
-    madness.
+* RTF is *extremely* verbose. Microsoft Word, for instance, emits 29,807
+  characters as the copy/cut representation of "This is **good**!"
+  Microsoft is known for verbose exports, and RTF itself attempts to
+  represent whole documents rather than individual snippets. Still, that's
+  roughly 1,000x (a.k.a. three decimal orders of magnitude) as verbose as HTML.
+  Try copying existing text in some
+  application, then running ``pasteall()`` to get your own taste of this
+  madness.
 
-  * If you put multiple forms of text on the clipboard, you don't have much if
-    any control which one an application will use when you ask it to "paste"
-    data. If you want a single format, better to just put that one format on the
-    clipboard.
+* If you put multiple forms of text on the clipboard, you don't have much if
+  any control which one an application will use when you ask it to "paste"
+  data. If you want a single format, better to just put that one format on the
+  clipboard.
 
 While Mac apps occasionally put HTML contents on the pasteboard, RTF seems
 to be the most common *lingua franca*. I've not found any particularly good,
@@ -105,37 +116,48 @@ yielding ``temp.html``. This can be parsed and manipulated with `lxml
 Notes
 =====
 
-  * Version 1.0.0 updates the testing matrix. Latest versions of 2.7, 3.3,
-    3.4, 3.5, the new 3.6 (alpha 2) are confirmed working. Old,
-    pre-[SemVer](http://semver.org/) versions have been removed from PyPI;
-    they were causing some install problems. Python 3.2 has been withdrawn
-    from support as both ancient and no longer being properly supported in
-    my local test rig.)
+* Version 1.0.1 withdraws the wheel packaging from distribution.
+  Wheels are in general great, but
+  `it was reported <https://bitbucket.org/jeunice/richxerox/issues/3/pyobjc-undeclared-dependency>`_
+  to be causing installability breakage depending on the local install
+  status of Mac foundation libraries, given that wheels are a preferred
+  and somewhat canned install format. Withdrawing wheels should force a
+  more local-system-centered set of dependencies to be installed.
+  If you still have trouble, try installing
+  `pyobjc <https://pypi.python.org/pypi/pyobjc>`_ manually before
+  installing ``richxerox``.
 
-  * As of version 0.6, much more robust handling of Unicode characters.
-    Better auto-install, including installing foundation ``pyobjc``
-    module if necessary. (`pyobjc` auto-install only works reliably
-    on Python 2.7 and above,
-    so official support for Python 2.6 has been withdrawn.)
+* Version 1.0.0 updates the testing matrix. Latest versions of 2.7, 3.3,
+  3.4, 3.5, and 3.6 are confirmed working. Old,
+  pre-[SemVer](http://semver.org/) versions have been removed from PyPI;
+  they were causing some install problems. Python 3.2 has been withdrawn
+  from support as both ancient and no longer being properly supported in
+  my local test rig.)
 
-  * If the underlying `pyobjc` library needs to be installed, the process
-    will take a *long* time. For example, 4 hours 7 minutes. Don'ty just get
-    coffee while it's installing. Take lunch. A long, languorous lunch. And
-    then maybe have a nap.
+* As of version 0.6, much more robust handling of Unicode characters.
+  Better auto-install, including installing foundation ``pyobjc``
+  module if necessary. (`pyobjc` auto-install only works reliably
+  on Python 2.7 and above,
+  so official support for Python 2.6 has been withdrawn.)
 
-  * Version 0.5 had a mistake in Unicode handling. Even though it passed all
-    tests, it over-quoted Unicode coming from real apps. Fixed.
+* If the underlying `pyobjc` library needs to be installed, the process
+  will take a *long* time. For example, 4 hours 7 minutes. Don'ty just get
+  coffee while it's installing. Take lunch. A long, languorous lunch. And
+  then maybe have a nap.
 
-  * Code inspired by and/or based on Genba's `Reading URLs from OS X clipboard with PyObjC <http://genbastechthoughts.wordpress.com/2012/05/20/reading-urls-from-os-x-clipboard-with-pyobjc/>`_
-    and Carl M. Johnson's `copy_paste.py <http://blog.carlsensei.com/post/88897796>`_
+* Version 0.5 had a mistake in Unicode handling. Even though it passed all
+  tests, it over-quoted Unicode coming from real apps. Fixed.
 
-  * See also `NSPasteboard docs <http://developer.apple.com/library/mac/#documentation/Cocoa/Reference/ApplicationKit/Classes/NSPasteboard_Class/Reference/Reference.html>`_,
-    `a discussion on UTIs <http://sigpipe.macromates.com/2009/03/09/uti-problems/>`_, and
-    John Siracusa's `discussion of the evolution of Mac OS types <http://www.scribd.com/doc/6915424/Mac-OS-X-104-Tiger#page=52>`_
+* Code inspired by and/or based on Genba's `Reading URLs from OS X clipboard with PyObjC <http://genbastechthoughts.wordpress.com/2012/05/20/reading-urls-from-os-x-clipboard-with-pyobjc/>`_
+  and Carl M. Johnson's `copy_paste.py <http://blog.carlsensei.com/post/88897796>`_
 
- *  The author, `Jonathan Eunice <mailto:jonathan.eunice@gmail.com>`_ or
-    `@jeunice on Twitter <http://twitter.com/jeunice>`_
-    welcomes your comments and suggestions.
+* See also `NSPasteboard docs <http://developer.apple.com/library/mac/#documentation/Cocoa/Reference/ApplicationKit/Classes/NSPasteboard_Class/Reference/Reference.html>`_,
+  `a discussion on UTIs <http://sigpipe.macromates.com/2009/03/09/uti-problems/>`_, and
+  John Siracusa's `discussion of the evolution of Mac OS types <http://www.scribd.com/doc/6915424/Mac-OS-X-104-Tiger#page=52>`_
+
+* The author, `Jonathan Eunice <mailto:jonathan.eunice@gmail.com>`_ or
+  `@jeunice on Twitter <http://twitter.com/jeunice>`_
+  welcomes your comments and suggestions.
 
 Installation
 ============
@@ -144,8 +166,11 @@ To install the latest version::
 
     pip install -U richxerox
 
-To ``easy_install`` under a specific Python version (3.3 in this example)::
+In some cases with multiple Python installations, ``pip`` and the Python
+ininstallation can become disconnected. If the above does not work, try
+installing through Python directly. You can also specify a particular
+version of Python to install under.::
 
-    python3.3 -m easy_install --upgrade richxerox
+    python -m pip install -U richxerox
 
-(You may need to prefix these with "sudo " to authorize installation.)
+(You may need to prefix these with ``sudo`` to authorize installation.)
